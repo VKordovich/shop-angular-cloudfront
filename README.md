@@ -29,3 +29,7 @@ Follow the steps:
 - git clone
 - npm i
 - ng serve
+
+## Additional links
+[S3-website](http://vk-rs-aws-shop.s3-website.eu-central-1.amazonaws.com "S3-website")
+[CloudFront URL](https://d39ggzb2g3mq1c.cloudfront.net "CloudFront")
