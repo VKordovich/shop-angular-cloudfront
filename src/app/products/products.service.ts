@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { EMPTY, Observable, of, throwError } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {
+  map,
+  tap
+} from 'rxjs/operators';
 
 import { Product } from './product.interface';
 
@@ -64,7 +67,8 @@ export class ProductsService extends ApiService {
     }
 
     const url = this.getUrl('bff', 'products');
-    return this.http.get<Product[]>(url);
+    return this.http.get<Record<string, Record<'products' | 'stock', Product[]>>>(url)
+      .pipe(map(this.mapProducts.bind(this)));
   }
 
   getProductsForCheckout(ids: string[]): Observable<Product[]> {
@@ -75,5 +79,12 @@ export class ProductsService extends ApiService {
     return this.getProducts().pipe(
       map((products) => products.filter((product) => ids.includes(product.id)))
     );
+  }
+
+  private mapProducts({ data }: Record<string, Record<'products' | 'stock', Product[]>>): Product[] {
+    return data.products.map(product => {
+      const stock = data.stock.find(item => item.id === product.id) as Product;
+      return { ...product, ...stock };
+    })
   }
 }
