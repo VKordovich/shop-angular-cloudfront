@@ -103,15 +103,15 @@ export class EditProductComponent implements OnInit, OnDestroy {
       : this.productsService.createNewProduct(product);
 
     this.requestInProgress = true;
-    editProduct$.subscribe(
-      () => this.router.navigate(['../'], { relativeTo: this.activatedRoute }),
-      (error: unknown) => {
+    editProduct$.subscribe({
+      next: () => this.router.navigate(['../'], { relativeTo: this.activatedRoute }),
+      error: (error: unknown) => {
         console.warn(error);
         this.requestInProgress = false;
         this.notificationService.showError(
           `Failed to ${this.productId ? 'edit' : 'create'} product`
         );
       }
-    );
+    });
   }
 }
