@@ -35,6 +35,10 @@ export class ManageProductsService extends ApiService {
     const url = this.getUrl('import', 'import');
 
     return this.http.get<string>(url, {
+      headers: {
+        // eslint-disable-next-line @typescript-eslint/naming-convention
+        'Authorization': `Basic ${localStorage.getItem('authorization_token') ?? ''}`
+      },
       params: {
         name: fileName,
       },
