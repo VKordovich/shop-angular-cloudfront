@@ -5,6 +5,8 @@ export interface Product {
   id: string;
   price: number;
   title: string;
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  product_id: string;
 }
 
 export interface ProductCheckout extends Product {

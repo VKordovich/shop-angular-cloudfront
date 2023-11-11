@@ -83,7 +83,7 @@ export class ProductsService extends ApiService {
 
   private mapProducts({ data }: Record<string, Record<'products' | 'stock', Product[]>>): Product[] {
     return data.products.map(product => {
-      const stock = data.stock.find(item => item.id === product.id) as Product;
+      const stock = data.stock.find(item => item.product_id === product.id) as Product;
       return { ...product, ...stock };
     })
   }
